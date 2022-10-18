@@ -54,7 +54,9 @@ function _cambiarCamara() {
   const opciones = {
     audio: false,
     video: {
-      facingMode: facingMode, width: tamano, height: tamano
+      facingMode: facingMode,
+      width: tamano,
+      height: tamano,
     }
   }
 

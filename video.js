@@ -2,7 +2,7 @@ const tamano = 400;
 const video = document.getElementById("video");
 const canvas = document.getElementById("canvas");
 const otrocanvas = document.getElementById("otrocanvas");
-const ctx = canvas.getContext("2d");
+const ctx = canvas.getContext("2d", { willReadFrequently: true });
 let currentStream = null;
 const facingMode = "user";
 
@@ -81,7 +81,7 @@ function predecir() {
     resample_single(canvas, 100, 100, otrocanvas);
 
     // hacer prediccion
-    const ctx2 = otrocanvas.getContext("2d");
+    const ctx2 = otrocanvas.getContext("2d", { willReadFrequently: true });
     const imgData = ctx2.getImageData(0, 0, 100, 100);
 
     let arr = [];
@@ -89,9 +89,9 @@ function predecir() {
 
     for (let p=0; p < imgData.data.length; p+=4) {
       const rojo = imgData.data[p] / 255;
-      const verde = imgData[p+1] / 255;
-      const azul = imgData[p+2] / 255;
-      const gris = (rojo+verde+azul) / 3;
+      const verde = imgData.data[p+1] / 255;
+      const azul = imgData.data[p+2] / 255;
+      const gris = (rojo + verde + azul) / 3;
 
       arr100.push([gris]);
       if (arr100.length == 100) {
@@ -136,8 +136,8 @@ function resample_single(canvas, width, height, resize_canvas) {
   const ratio_w_half = Math.ceil(ratio_w / 2);
   const ratio_h_half = Math.ceil(ratio_h / 2);
 
-  const ctx = canvas.getContext("2d");
-  const ctx2 = resize_canvas.getContext("2d");
+  const ctx = canvas.getContext("2d", { willReadFrequently: true });
+  const ctx2 = resize_canvas.getContext("2d", { willReadFrequently: true });
   const img = ctx.getImageData(0, 0, width_source, height_source);
   const img2 = ctx2.createImageData(width, height);
   const data = img.data;

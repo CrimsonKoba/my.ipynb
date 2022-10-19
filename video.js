@@ -4,7 +4,7 @@ const canvas = document.getElementById("canvas");
 const otrocanvas = document.getElementById("otrocanvas");
 const ctx = canvas.getContext("2d", { willReadFrequently: true });
 let currentStream = null;
-const facingMode = "user";
+let facingMode = "user";
 
 let modelo = null;
 
@@ -58,17 +58,16 @@ function _cambiarCamara() {
       width: tamano,
       height: tamano,
     }
-  }
+  };
 
   navigator.mediaDevices.getUserMedia(opciones)
-           .then(function(stream) {
-             currentStream = stream;
-             video.srcObject = currentStream;
-           })
-           .catch(function(err) {
-             console.log("Hubo un error: ", err);
-
-           })
+    .then((stream) => {
+      currentStream = stream;
+      video.srcObject = currentStream;
+    })
+    .catch(function(err) {
+      console.log("Hubo un error: ", err);
+    })
 }
 
 function procesarCamara() {
